@@ -219,8 +219,8 @@
     top: 4px;
     font-weight: 600;
   }
-  .pros-row .pros-cons-list li::before { content: '✓'; color: #2D7A4F; }
-  .cons-row .pros-cons-list li::before { content: '✕'; color: #A53F3F; }
+  .pros-row .pros-cons-list li::before { content: '●'; color: #2D7A4F; font-size: 10px; top: 7px; }
+  .cons-row .pros-cons-list li::before { content: '●'; color: #A53F3F; font-size: 10px; top: 7px; }
   
   .recommend-badge {
     display: inline-block;
@@ -270,10 +270,40 @@
   }
   
   @media print {
-    body { background: white; }
+    @page { size: A4; margin: 12mm 10mm; }
+    html, body { background: white; }
     .page { padding: 0; max-width: 100%; }
-    .section { box-shadow: none; border: 1px solid #E8E2D5; page-break-inside: avoid; }
-    .header { box-shadow: none; }
+    .header { box-shadow: none; padding: 24px 24px; margin-bottom: 14px; border-radius: 8px; }
+    .header h1 { font-size: 22px; }
+    .section { 
+      box-shadow: none; 
+      border: 1px solid #E8E2D5; 
+      padding: 18px 20px;
+      margin-bottom: 14px;
+      border-radius: 8px;
+    }
+    .section-title { font-size: 15px; margin-bottom: 12px; padding-bottom: 8px; }
+    .info-card { padding: 10px 14px; }
+    .info-card .value { font-size: 16px; }
+    .compare-table { page-break-inside: auto; }
+    .compare-table tr { page-break-inside: avoid; }
+    .compare-table td { padding: 8px 10px; font-size: 11.5px; }
+    .pros-cons-row td { padding: 12px 10px; }
+    .pros-cons-list li { padding: 3px 0 3px 14px; font-size: 11.5px; }
+    .section-row td { padding: 6px 10px !important; font-size: 11px; }
+    .plan-header > div { padding: 10px 10px; }
+    .note { padding: 10px 14px; font-size: 11px; }
+    .footer { padding: 14px 0; margin-top: 16px; }
+  }
+  
+  /* 修正勾選符號 防止字型缺失 */
+  .pros-row .pros-cons-list li::before {
+    font-family: -apple-system, "PingFang TC", "Microsoft JhengHei", sans-serif;
+    font-size: 13px;
+  }
+  .cons-row .pros-cons-list li::before {
+    font-family: -apple-system, "PingFang TC", "Microsoft JhengHei", sans-serif;
+    font-size: 13px;
   }
 </style>
 </head>
@@ -495,6 +525,7 @@
       </td>
       <td>
         <ul class="pros-cons-list">
+          <li>10 年總利息最低 約 560 萬</li>
           <li>自備款最低 約 560 萬剛好</li>
           <li>月還款最低 約 114,917</li>
           <li>另一筆貸款金額最小 300 萬</li>
@@ -527,8 +558,9 @@
       </td>
       <td>
         <ul class="pros-cons-list">
-          <li>敘泉源利率較高 2.55%</li>
-          <li>年限較短 26 年 月還款較高</li>
+          <li>敘泉源單筆利率較高 2.55%</li>
+          <li>但搭配另一筆貸款後 實際 10 年總利息為三方案中最低 約 560 萬</li>
+          <li>年限較短 26 年 敘泉源月還款較高</li>
           <li>未來若轉貸 利率仍可能高於軍公教</li>
         </ul>
       </td>
