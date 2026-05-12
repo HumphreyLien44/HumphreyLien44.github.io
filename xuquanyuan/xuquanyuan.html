@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>敘泉源購屋方案分析</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  html, body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang TC", "Microsoft JhengHei", "Helvetica Neue", Arial, sans-serif;
+    color: #2C3338;
+    background: #F5F3EE;
+    line-height: 1.6;
+    font-size: 14px;
+    -webkit-font-smoothing: antialiased;
+  }
+  
+  .page {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 24px;
+  }
+  
+  .header {
+    background: linear-gradient(135deg, #1F4068 0%, #2E5984 100%);
+    color: white;
+    padding: 36px 32px;
+    border-radius: 12px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 16px rgba(31, 64, 104, 0.15);
+  }
+  .header h1 {
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+  }
+  .header .subtitle {
+    font-size: 14px;
+    opacity: 0.88;
+    font-weight: 400;
+  }
+  .header .meta {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255,255,255,0.2);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 32px;
+    font-size: 13px;
+  }
+  .header .meta-item { display: flex; gap: 6px; }
+  .header .meta-label { opacity: 0.7; }
+  .header .meta-value { font-weight: 500; }
+  
+  .section {
+    background: white;
+    border-radius: 12px;
+    padding: 28px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+  
+  .section-title {
+    font-size: 17px;
+    font-weight: 600;
+    color: #1F4068;
+    margin-bottom: 18px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #E8E2D5;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title::before {
+    content: '';
+    width: 4px;
+    height: 18px;
+    background: #C5A572;
+    border-radius: 2px;
+  }
+  
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .info-card {
+    background: #FAF8F3;
+    padding: 16px;
+    border-radius: 8px;
+    border-left: 3px solid #C5A572;
+  }
+  .info-card .label {
+    font-size: 12px;
+    color: #6B6258;
+    margin-bottom: 4px;
+  }
+  .info-card .value {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1F4068;
+    font-variant-numeric: tabular-nums;
+  }
+  
+  .plan-header {
+    display: grid;
+    grid-template-columns: 130px 1fr 1fr 1fr;
+    background: #FAF8F3;
+    border-radius: 10px 10px 0 0;
+    overflow: hidden;
+  }
+  .plan-header > div {
+    padding: 16px 14px;
+    text-align: center;
+    border-right: 1px solid #E8E2D5;
+  }
+  .plan-header > div:last-child { border-right: none; }
+  .plan-header > div:first-child { background: #2C3338; color: white; }
+  
+  .plan-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 12px;
+    margin-top: 6px;
+  }
+  .plan-name { font-weight: 600; font-size: 15px; color: #2C3338; }
+  .plan-A .plan-name { color: #B07910; }
+  .plan-B .plan-name { color: #2D7A4F; }
+  .plan-C .plan-name { color: #A53F3F; }
+  .plan-A .plan-tag { background: #FAEEDA; color: #8B5A00; }
+  .plan-B .plan-tag { background: #DCEBC8; color: #2D7A4F; }
+  .plan-C .plan-tag { background: #FBE0E0; color: #A53F3F; }
+  
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 0 0 10px 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    table-layout: fixed;
+  }
+  .compare-table colgroup col:first-child { width: 130px; }
+  .compare-table colgroup col:not(:first-child) { width: calc((100% - 130px) / 3); }
+  
+  .compare-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid #F0EBE0;
+    border-right: 1px solid #F0EBE0;
+    vertical-align: top;
+    word-break: break-word;
+    font-size: 13px;
+  }
+  .compare-table td:last-child { border-right: none; }
+  .compare-table tr:last-child td { border-bottom: none; }
+  
+  .compare-table .row-label {
+    background: #FAF8F3;
+    color: #6B6258;
+    font-weight: 500;
+    font-size: 12.5px;
+  }
+  
+  .section-row td {
+    background: #E8E2D5 !important;
+    color: #6B5A35;
+    font-weight: 600;
+    font-size: 12px;
+    padding: 8px 14px !important;
+    letter-spacing: 0.3px;
+  }
+  
+  .highlight-row td {
+    background: #FAF8F3;
+    font-weight: 600;
+  }
+  
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .num-large { font-size: 15px; font-weight: 600; }
+  
+  .good { color: #2D7A4F; font-weight: 600; }
+  .bad { color: #A53F3F; font-weight: 600; }
+  .warn { color: #B07910; font-weight: 600; }
+  
+  .sub-text {
+    font-size: 11.5px;
+    color: #8E847A;
+    font-weight: 400;
+    display: block;
+    margin-top: 2px;
+  }
+  
+  .pros-cons-row td { padding: 16px 14px; }
+  .pros-cons-row.pros td { background: #F0F7E9; }
+  .pros-cons-row.cons td { background: #FBF1EC; }
+  .pros-cons-row .row-label {
+    background: #DCEBC8 !important;
+    color: #2D7A4F;
+  }
+  .pros-cons-row.cons .row-label {
+    background: #FBE0E0 !important;
+    color: #A53F3F;
+  }
+  .pros-cons-list { list-style: none; padding: 0; margin: 0; }
+  .pros-cons-list li {
+    padding: 4px 0 4px 16px;
+    position: relative;
+    line-height: 1.5;
+    font-size: 13px;
+  }
+  .pros-cons-list li::before {
+    position: absolute;
+    left: 0;
+    top: 4px;
+    font-weight: 600;
+  }
+  .pros-row .pros-cons-list li::before { content: '✓'; color: #2D7A4F; }
+  .cons-row .pros-cons-list li::before { content: '✕'; color: #A53F3F; }
+  
+  .recommend-badge {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 13px;
+  }
+  .recommend-1 { background: #2D7A4F; color: white; }
+  .recommend-2 { background: #B07910; color: white; }
+  .recommend-3 { background: #A53F3F; color: white; }
+  
+  .note {
+    font-size: 12px;
+    color: #8E847A;
+    line-height: 1.7;
+    padding: 14px 16px;
+    background: #FAF8F3;
+    border-left: 3px solid #C5A572;
+    border-radius: 0 6px 6px 0;
+    margin-top: 16px;
+  }
+  .note strong { color: #6B5A35; }
+  
+  .footer {
+    text-align: center;
+    padding: 24px 0;
+    color: #8E847A;
+    font-size: 12px;
+    border-top: 1px solid #E8E2D5;
+    margin-top: 32px;
+  }
+  
+  @media (max-width: 768px) {
+    .page { padding: 20px 12px; }
+    .header { padding: 24px 20px; }
+    .header h1 { font-size: 22px; }
+    .section { padding: 20px 16px; }
+    .compare-table { font-size: 12px; }
+    .compare-table td { padding: 10px 10px; font-size: 12px; }
+    .compare-table colgroup col:first-child { width: 100px; }
+    .plan-header { grid-template-columns: 100px 1fr 1fr 1fr; }
+    .plan-header > div { padding: 12px 8px; }
+    .plan-name { font-size: 13px; }
+    .plan-tag { font-size: 10px; }
+    .info-grid { grid-template-columns: 1fr 1fr; }
+  }
+  
+  @media print {
+    body { background: white; }
+    .page { padding: 0; max-width: 100%; }
+    .section { box-shadow: none; border: 1px solid #E8E2D5; page-break-inside: avoid; }
+    .header { box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+<div class="header">
+  <h1>敘泉源購屋方案分析</h1>
+  <div class="subtitle">資產移轉策略比較 · 利率與自備款取捨評估</div>
+  <div class="meta">
+    <div class="meta-item">
+      <span class="meta-label">總價:</span>
+      <span class="meta-value">約 2,800 萬 (含裝潢)</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">產品:</span>
+      <span class="meta-value">兩房</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">自備款:</span>
+      <span class="meta-value">約 600 萬</span>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">現況背景</div>
+  <div class="info-grid">
+    <div class="info-card">
+      <div class="label">老公北投房</div>
+      <div class="value">餘 300 萬</div>
+    </div>
+    <div class="info-card">
+      <div class="label">老婆宜蘭房</div>
+      <div class="value">餘 600 萬</div>
+    </div>
+    <div class="info-card">
+      <div class="label">老婆身分</div>
+      <div class="value">軍公教</div>
+    </div>
+    <div class="info-card">
+      <div class="label">自備款</div>
+      <div class="value">約 600 萬</div>
+    </div>
+  </div>
+  <div class="note">
+    <strong>核心目標:</strong> 讓買敘泉源的人「名下無房」 才能規避第二戶限貸 6 成的天花板 拉回首購 8 成的貸款條件。<br>
+    <strong>夫妻贈與優勢:</strong> 依稅法規定 夫妻間贈與免贈與稅 免土增稅 (土增稅暫不課徵 待未來轉讓給第三人時才計算)。
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">三方案完整比較</div>
+  
+  <div class="plan-header">
+    <div></div>
+    <div class="plan-A">
+      <div class="plan-name">方案 A</div>
+      <div class="plan-tag">贈與 + 老婆軍公教</div>
+    </div>
+    <div class="plan-B">
+      <div class="plan-name">方案 B</div>
+      <div class="plan-tag">贈與 + 老公首購</div>
+    </div>
+    <div class="plan-C">
+      <div class="plan-name">方案 C</div>
+      <div class="plan-tag">買賣</div>
+    </div>
+  </div>
+
+  <table class="compare-table">
+    <colgroup><col><col><col><col></colgroup>
+    
+    <tr class="section-row"><td colspan="4">操作流程</td></tr>
+    <tr>
+      <td class="row-label">移轉方式</td>
+      <td>老婆宜蘭贈與老公</td>
+      <td>老公北投贈與老婆</td>
+      <td>老婆宜蘭賣給老公<br><span class="sub-text">約 1,000 ~ 1,200 萬</span></td>
+    </tr>
+    <tr>
+      <td class="row-label">前置動作</td>
+      <td>老公北投增貸約 600 萬<br><span class="sub-text">清宜蘭原貸</span></td>
+      <td>老婆宜蘭增貸約 300 萬<br><span class="sub-text">清北投原貸</span></td>
+      <td>老公須先清北投 300 萬<br><span class="sub-text">才能貸宜蘭 75%</span></td>
+    </tr>
+    <tr>
+      <td class="row-label">敘泉源登記人</td>
+      <td>老婆 (軍公教)</td>
+      <td>老公 (首購)</td>
+      <td>老婆 (軍公教)</td>
+    </tr>
+    
+    <tr class="section-row"><td colspan="4">敘泉源貸款條件</td></tr>
+    <tr>
+      <td class="row-label">貸款方案</td>
+      <td>台銀軍公教<br><span class="sub-text">2.185% · 30 年</span></td>
+      <td>華南首購<br><span class="sub-text">2.55% · 26 年</span></td>
+      <td>台銀軍公教<br><span class="sub-text">2.185% · 30 年</span></td>
+    </tr>
+    <tr>
+      <td class="row-label">可貸成數</td>
+      <td><span class="warn">75% 或 80% 待確認</span></td>
+      <td><span class="good">約 80%</span></td>
+      <td><span class="warn">75% 或 80% 待確認</span></td>
+    </tr>
+    <tr>
+      <td class="row-label">敘泉源自備款</td>
+      <td>75%: 約 700 萬<br>80%: 約 560 萬</td>
+      <td><span class="good">約 560 萬</span></td>
+      <td>75%: 約 700 萬<br>80%: 約 560 萬</td>
+    </tr>
+    
+    <tr class="section-row"><td colspan="4">另一筆貸款</td></tr>
+    <tr>
+      <td class="row-label">操作內容</td>
+      <td>老公用北投房增貸<br><span class="sub-text">約 600 萬 · 20 年 · 3%</span></td>
+      <td>老婆用宜蘭房增貸<br><span class="sub-text">約 300 萬 · 20 年 · 3%</span></td>
+      <td>老公買宜蘭約 1,100 萬<br>貸 75% 約 825 萬<br><span class="sub-text">20 年 · 約 3% (名下仍有北投)</span></td>
+    </tr>
+    <tr>
+      <td class="row-label">另一筆自備</td>
+      <td><span class="good">0 萬</span></td>
+      <td><span class="good">0 萬</span></td>
+      <td><span class="bad">先清北投約 300 萬<br>+ 買宜蘭自備約 275 萬</span></td>
+    </tr>
+    
+    <tr class="section-row"><td colspan="4">總現金需求</td></tr>
+    <tr class="highlight-row">
+      <td class="row-label">自備款合計</td>
+      <td>75%: 約 700 萬<br>80%: 約 560 萬</td>
+      <td><span class="good">約 560 萬</span></td>
+      <td><span class="bad">75%: 約 1,275 萬<br>80%: 約 1,135 萬</span></td>
+    </tr>
+    <tr>
+      <td class="row-label">口袋 600 萬</td>
+      <td>75%: 缺約 100 萬<br>80%: <span class="good">夠</span></td>
+      <td><span class="good">夠</span></td>
+      <td><span class="bad">嚴重不足<br>缺約 535 ~ 675 萬</span></td>
+    </tr>
+    
+    <tr class="section-row"><td colspan="4">稅務成本</td></tr>
+    <tr>
+      <td class="row-label">土增稅</td>
+      <td><span class="good">免</span></td>
+      <td><span class="good">免</span></td>
+      <td><span class="bad">需繳 (金額未知)</span></td>
+    </tr>
+    <tr>
+      <td class="row-label">房地合一稅</td>
+      <td><span class="good">免 (短期不賣)</span></td>
+      <td><span class="good">免 (短期不賣)</span></td>
+      <td><span class="warn">買賣價做高才有</span></td>
+    </tr>
+    <tr>
+      <td class="row-label">其他費用</td>
+      <td>契稅 印花稅 規費</td>
+      <td>契稅 印花稅 規費</td>
+      <td>契稅 印花稅 規費<br><span class="sub-text">+ 非屬贈與證明流程</span></td>
+    </tr>
+    
+    <tr class="section-row"><td colspan="4">月還款</td></tr>
+    <tr>
+      <td class="row-label">敘泉源月還</td>
+      <td class="num">75%: 約 79,577<br>80%: 約 84,822</td>
+      <td class="num">約 98,279</td>
+      <td class="num">75%: 約 79,577<br>80%: 約 84,822</td>
+    </tr>
+    <tr>
+      <td class="row-label">另一筆月還</td>
+      <td class="num">約 33,276</td>
+      <td class="num"><span class="good">約 16,638</span></td>
+      <td class="num">約 45,754</td>
+    </tr>
+    <tr class="highlight-row">
+      <td class="row-label">合計每月</td>
+      <td class="num num-large">75%: 約 112,853<br>80%: 約 118,158</td>
+      <td class="num num-large good">約 114,917</td>
+      <td class="num num-large">75%: 約 125,331<br>80%: 約 130,636</td>
+    </tr>
+    
+    <tr class="section-row"><td colspan="4">前 10 年累計利息 (本息平均攤還)</td></tr>
+    <tr>
+      <td class="row-label">敘泉源</td>
+      <td class="num">75%: 約 401 萬<br>80%: 約 428 萬</td>
+      <td class="num">約 488 萬</td>
+      <td class="num">75%: 約 401 萬<br>80%: 約 428 萬</td>
+    </tr>
+    <tr>
+      <td class="row-label">另一筆</td>
+      <td class="num">約 144 萬</td>
+      <td class="num good">約 72 萬</td>
+      <td class="num">約 198 萬</td>
+    </tr>
+    <tr class="highlight-row">
+      <td class="row-label">10 年總利息</td>
+      <td class="num num-large">75%: 約 545 萬<br>80%: 約 572 萬</td>
+      <td class="num num-large good">約 560 萬</td>
+      <td class="num num-large bad">75%: 約 599 萬<br>80%: 約 626 萬</td>
+    </tr>
+    <tr>
+      <td class="row-label">+ 額外稅費</td>
+      <td><span class="good">契印規費</span></td>
+      <td><span class="good">契印規費</span></td>
+      <td><span class="bad">契印規費 + 土增稅<br>+ 可能房地合一稅</span></td>
+    </tr>
+    
+    <tr class="section-row"><td colspan="4">優勢</td></tr>
+    <tr class="pros-cons-row pros">
+      <td class="row-label">優點</td>
+      <td>
+        <ul class="pros-cons-list">
+          <li>敘泉源利率最低 2.185%</li>
+          <li>軍公教方案穩定 心理安心</li>
+          <li>免土增稅 免房地合一稅</li>
+          <li>75% 情境下 10 年利息最低</li>
+        </ul>
+      </td>
+      <td>
+        <ul class="pros-cons-list">
+          <li>自備款最低 約 560 萬剛好</li>
+          <li>月還款最低 約 114,917</li>
+          <li>另一筆貸款金額最小 300 萬</li>
+          <li>免土增稅 免房地合一稅</li>
+          <li>利率隨時間浮動 若有降息或其他方案 可再轉貸壓低利率</li>
+          <li>資金流向追查風險最低</li>
+        </ul>
+      </td>
+      <td>
+        <ul class="pros-cons-list">
+          <li>資金流向 100% 乾淨透明</li>
+          <li>不需做資金過水操作</li>
+          <li>不必擔心央行追查</li>
+          <li>心理上最安心</li>
+        </ul>
+      </td>
+    </tr>
+    
+    <tr class="section-row"><td colspan="4">劣勢</td></tr>
+    <tr class="pros-cons-row cons">
+      <td class="row-label">缺點</td>
+      <td>
+        <ul class="pros-cons-list">
+          <li>軍公教成數不確定</li>
+          <li>若僅 75% 需多籌約 100 萬</li>
+          <li>另一筆增貸金額較大 600 萬</li>
+          <li>軍公教利率已是底部 未來轉貸空間小</li>
+          <li>月還款較高 約 118,158 (80%)</li>
+        </ul>
+      </td>
+      <td>
+        <ul class="pros-cons-list">
+          <li>敘泉源利率較高 2.55%</li>
+          <li>年限較短 26 年 月還款較高</li>
+          <li>未來若轉貸 利率仍可能高於軍公教</li>
+        </ul>
+      </td>
+      <td>
+        <ul class="pros-cons-list">
+          <li>自備款最高 缺口 535~675 萬</li>
+          <li>10 年總利息最高</li>
+          <li>需繳土增稅 金額未知</li>
+          <li>價格做高有房地合一稅</li>
+          <li>二等親內貸款僅 75%</li>
+          <li>老公買宜蘭利率約 3% 不便宜</li>
+          <li>須取得非屬贈與證明書</li>
+          <li>須提供資金支付證明</li>
+          <li>流程最繁瑣</li>
+        </ul>
+      </td>
+    </tr>
+    
+    <tr class="section-row"><td colspan="4">綜合評估</td></tr>
+    <tr class="highlight-row">
+      <td class="row-label">適用情境</td>
+      <td>軍公教確定能 80%<br>且接受 600 萬增貸</td>
+      <td><span class="good">老公收入能撐<br>追求最低自備款<br>與最大彈性</span></td>
+      <td><span class="bad">需另外籌 535 萬以上現金<br>否則不可行</span></td>
+    </tr>
+    <tr>
+      <td class="row-label">推薦順位</td>
+      <td><span class="recommend-badge recommend-2">第 2 順位</span></td>
+      <td><span class="recommend-badge recommend-1">第 1 順位</span></td>
+      <td><span class="recommend-badge recommend-3">不推薦</span></td>
+    </tr>
+    
+  </table>
+  
+  <div class="note" style="margin-top:20px">
+    <strong>備註說明</strong><br>
+    註 1. 利息均採本息平均攤還逐月計算 真實反映前期利息較重的特性<br>
+    註 2. 軍公教方案的可貸成數需向台銀確認 影響自備款與總利息差異甚大<br>
+    註 3. 方案 A 若軍公教只 75% 利息最低 但自備款短缺約 100 萬<br>
+    註 4. 方案 C 無論成數如何 利息均高於 A B 兩案 且自備款缺口巨大<br>
+    註 5. 土增稅金額需代書依宜蘭房原始公告現值與持有約 10 年的漲價倍數計算
+  </div>
+</div>
+
+<div class="footer">
+  本提案為購屋方案策略分析 · 實際利率 成數 稅費需以銀行與代書最終核定為準<br>
+  最後更新日期 · 2026 年 5 月
+</div>
+
+</div>
+
+</body>
+</html>
